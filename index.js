@@ -7,7 +7,7 @@ const PrettyStream = require('bunyan-prettystream');
 const fs = require('fs');
 const OPT_FILE_NAME = 'test/mochabunyan.opts';
 
-let reporter = mocha.reporters.nyan,
+let reporter = mocha.reporters.Spec,
     mute = false,
     level = 'trace';
 
@@ -34,7 +34,7 @@ prettyStdOut.pipe(process.stdout);
 var _createLogger = bunyan.createLogger;
 bunyan.createLogger = function(options) {
     options.streams = [{
-        level: mute ? 99 : level,
+        level: mute ? 99 : (options.level || level),
         type: 'raw',
         stream: prettyStdOut
     }];
