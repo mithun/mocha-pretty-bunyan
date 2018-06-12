@@ -1,23 +1,22 @@
-# mocha-pretty-bunyan-ntan 
+# mocha-pretty-bunyan 
 ## description
 
-bunyan is a pretty nice package to log in json format, and provides an awesome cli to display it in human readable way.  
+bunyan is a pretty nice package to log in json format, and provides an awesome cli to display it in human readable way.
 
 **But**, when you run your test with mocha, you cannot take benefit  of the cli, so you then get raw json logs that is a mess to read.
 
-*mocha-pretty-bunyan-nyan* provides a mocha reporter *nyan*  (by default) that display bunyan with a pretty/human readble format.
-
+*mocha-pretty-bunyan* provides a mocha reporter *Spec*  (by default) that display bunyan with a pretty/human readble format in the context of the mocha default reporter.
 
 ## Install
 
 ```
-npm install mocha-pretty-bunyan-nyan --save-dev
+npm install mocha-pretty-bunyan --save-dev
 ```
 
 ## Usage
 
 ```
-mocha --reporter mocha-pretty-bunyan-nyan
+mocha --reporter mocha-pretty-bunyan
 ```
 
 ## example of output:
@@ -39,18 +38,15 @@ mocha --reporter mocha-pretty-bunyan-nyan
 
 [12:02:29] Finished 'test' after 1.4 s
 ```
+
 ## mochabunyan.opts
 
-It is possible to configure few things by putting in the test directory a file **test/mochabunyan.opts** that could contains the following options:  
-**mute** set it true if you want to mute all logs  
-**level** if you want to set the global log level  
-**reporter** if you want to use a different reporter that nyan  
+It is possible to configure few things by putting in the test directory a file **test/mochabunyan.opts** that could contains the following options:
+**mute** set it true if you want to mute all logs
+**level** if you want to set the global log level
+**reporter** if you want to use a different reporter that Spec
 
 ex:
-{
-		"mute":false,
-        "level":"debug",
-        "reporter":"spec"
-}
-
-
+```
+{ "mute": false, "level": "debug", "reporter": "nyan" }
+```

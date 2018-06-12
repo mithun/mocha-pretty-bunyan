@@ -1,5 +1,5 @@
 {
-  "name": "mocha-pretty-bunyan-nyan",
+  "name": "mocha-pretty-bunyan",
   "version": "1.1.0",
   "description": "mocha pretty output bunyan",
   "main": "index.js",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nihonjinrxs/mocha-pretty-bunyan-nyan.git"
+    "url": "git://github.com/nihonjinrxs/mocha-pretty-bunyan.git"
   },
   "dependencies": {
     "bunyan": "^1.8.12",
