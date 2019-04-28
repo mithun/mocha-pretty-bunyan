@@ -1,47 +1,48 @@
-'use strict';
+"use strict";
 
+var fs = require("fs");
+var bunyan = require("bunyan");
+var mocha = require("mocha");
+var PrettyStream = require("@ambassify/bunyan-prettystream");
 
-const bunyan = require('bunyan');
-const mocha = require('mocha');
-const PrettyStream = require('bunyan-prettystream');
-const fs = require('fs');
-const OPT_FILE_NAME = 'test/mochabunyan.opts';
+var OPT_FILE_NAME =
+  process.env.MOCHA_PRETTY_BUNYAN_CONFIG || "test/mocha-pretty-bunyan.json";
 
-let reporter = mocha.reporters.Spec,
-    mute = false,
-    level = 'trace';
+var reporter = mocha.reporters.Spec,
+  mute = false,
+  level = "trace";
 
 if (fs.existsSync(OPT_FILE_NAME)) {
-    let config = JSON.parse(fs.readFileSync(OPT_FILE_NAME));
+  var config = JSON.parse(fs.readFileSync(OPT_FILE_NAME));
 
-    if (config.reporter){
-    	if (mocha.reporters[config.reporter]!==undefined){
-    		// default mocha reporter ?
-    		reporter = mocha.reporters[config.reporter];
-    	}else{
-    		// try to require it 
-    		reporter = require(config.reporter);
-    	}
+  if (config.reporter) {
+    if (mocha.reporters[config.reporter] !== undefined) {
+      // default mocha reporter ?
+      reporter = mocha.reporters[config.reporter];
+    } else {
+      // try to require it
+      reporter = require(config.reporter);
     }
+  }
 
-    mute = config.mute || mute;
-    level = config.level || level;
+  mute = config.mute || mute;
+  level = config.level || level;
 }
 
-let prettyStdOut = new PrettyStream();
+var prettyStdOut = new PrettyStream();
 prettyStdOut.pipe(process.stdout);
 
 var _createLogger = bunyan.createLogger;
 bunyan.createLogger = function(options) {
-    options.streams = [{
-        level: mute ? 99 : (options.level || level),
-        type: 'raw',
-        stream: prettyStdOut
-    }];
+  options.streams = [
+    {
+      level: mute ? 99 : options.level || level,
+      type: "raw",
+      stream: prettyStdOut
+    }
+  ];
 
-    return _createLogger(options);
+  return _createLogger(options);
 };
-
-
 
 module.exports = reporter;
