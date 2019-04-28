@@ -1,5 +1,14 @@
-.npmrc
-.nvmrc
-.jshintrc
+###############################################################################
+# NPMIGNORE FOR mocha-pretty-bunyan
+###############################################################################
+
+# Things `npm pack` should explicitly ignore
+
 .editorconfig
-node_modules
+.gitignore
+.grenrc
+.npmignore
+.nvmrc
+install-devtools.sh
+
+###############################################################################

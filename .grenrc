@@ -1,0 +1,10 @@
+{
+  "dataSource": "commits",
+  "prefix": "",
+  "includeMessages": "commits",
+  "ignoreCommitsWith": [
+    "changelog",
+    "gren"
+  ],
+  "changelogFilename": "CHANGELOG.md"
+}
