@@ -1,52 +1,58 @@
-# mocha-pretty-bunyan 
-## description
+# @mayachit/mocha-pretty-bunyan
 
-bunyan is a pretty nice package to log in json format, and provides an awesome cli to display it in human readable way.
+## Description
 
-**But**, when you run your test with mocha, you cannot take benefit  of the cli, so you then get raw json logs that is a mess to read.
+[bunyan](https://www.npmjs.com/package/bunyan) is a pretty nice package to log in JSON format, and provides an awesome cli to display it in human readable way. However, when you run your test with mocha, you cannot take benefit  of the cli, so you then get raw JSON logs that is a mess to read.
 
-*mocha-pretty-bunyan* provides a mocha reporter *Spec*  (by default) that display bunyan with a pretty/human readble format in the context of the mocha default reporter.
+`@mayachit/mocha-pretty-bunyan` displays the _bunyan log stream_ using a pretty/human readable format in the context of a mocha reporter. `@mayachit/mocha-pretty-bunyan` does not actually implement a mocha reporter, rather just wraps the _stdout_ stream of a mocha reporter (_spec_, by default) using [`@ambassify/bunyan-prettystream`](https://www.npmjs.com/package/@ambassify/bunyan-prettystream).
 
 ## Install
 
+```bash
+npm install @mayachit/mocha-pretty-bunyan --save-dev
 ```
-npm install mocha-pretty-bunyan --save-dev
-```
+
+Note that `@mayachit/mocha-pretty-bunyan` itself does not depend on a version of `mocha` or `bunyan`, but declares them as a `peerDependency` assuming that you already have both `mocha` and `bunyan` installed.
 
 ## Usage
 
-```
-mocha --reporter mocha-pretty-bunyan
-```
-
-## example of output:
-
-```
-[12:02:28] Using gulpfile ~/Dev/node2/ticketing/gulpfile.js
-[12:02:28] Starting 'test'...
-[2016-06-18T10:02:29.642Z]  INFO: db/43349 on xxxx-MacBook-Air.local: start mongodb
-[2016-06-18T10:02:29.683Z]  INFO: db/43349 on xxxx-MacBook-Air.local: open
-[2016-06-18T10:02:29.746Z]  INFO: mocha/43349 on xxxx-MacBook-Air.local: QR a1a6a5da-4cce-48f6-a52b-fb3490e3d84d"
-[2016-06-18T10:02:29.749Z]  INFO: mocha/43349 on xxxx-MacBook-Air.local: done
-[2016-06-18T10:02:29.749Z] DEBUG: mocha/43349 on xxxx-MacBook-Air.local: debug
- 1   -__,------,
- 0   -__|  /\_/\
- 0   -_~|_( ^ .^)
-     -_ ""  ""
-
-  1 passing (123ms)
-
-[12:02:29] Finished 'test' after 1.4 s
+```bash
+mocha --reporter @mayachit/mocha-pretty-bunyan
 ```
 
-## mochabunyan.opts
+## Configuration
 
-It is possible to configure few things by putting in the test directory a file **test/mochabunyan.opts** that could contains the following options:
-**mute** set it true if you want to mute all logs
-**level** if you want to set the global log level
-**reporter** if you want to use a different reporter that Spec
+`@mayachit/mocha-pretty-bunyan` will attempt to load a JSON configuration file from `test/mocha-pretty-bunyan.json`. A custom configuration file can also be specified using the `MOCHA_PRETTY_BUNYAN_CONFIG` environment variable.
 
-ex:
+The following configurations are supported:
+
+| Key        | Default Value | Description                                  |
+| ---------- | ------------- | -------------------------------------------- |
+| `mute`     | `false`       | Set to `true` if you want to _mute_ all logs |
+| `level`    | `trace`       | Valid bunyan log-level                       |
+| `reporter` | `spec`        | Mocha reporter to use                        |
+
+Example configuration file:
+
+```json
+{
+  "mute": false,
+  "level": "debug",
+  "reporter": "spec"
+}
 ```
-{ "mute": false, "level": "debug", "reporter": "nyan" }
+
+Since `@mayachit/mocha-pretty-bunyan` essentially _require's_ the mocha reporter specified, any `--reporter-options` will be passed through to the reporter specified in the configuration above.
+
+For example, if you want to use [`mocha-multi-reporters`](https://www.npmjs.com/package/mocha-multi-reporters), specify `mocha-multi-reporters` as the reporter in `test/mocha-pretty-bunyan.json` and then run:
+
+```bash
+mocha --reporter @mayachit/mocha-pretty-bunyan --reporter-options configFile=test/mocha-multi-reporters.json
 ```
+
+## Credits
+
+-   [`mocha-pretty-bunyan-nyan`](https://www.npmjs.com/package/mocha-pretty-bunyan-nyan) by [blurab](https://www.npmjs.com/~schretie)
+-   [`mocha-pretty-bunyan`](https://www.npmjs.com/package/mocha-pretty-bunyan) by [nihonjinrxs](https://www.npmjs.com/~nihonjinrxs).
+
+* * *
