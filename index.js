@@ -33,13 +33,13 @@ var prettyStdOut = new PrettyStream();
 prettyStdOut.pipe(process.stdout);
 
 var _createLogger = bunyan.createLogger;
-bunyan.createLogger = function(options) {
+bunyan.createLogger = function (options) {
   options.streams = [
     {
       level: mute ? 99 : options.level || level,
       type: "raw",
-      stream: prettyStdOut
-    }
+      stream: prettyStdOut,
+    },
   ];
 
   return _createLogger(options);
