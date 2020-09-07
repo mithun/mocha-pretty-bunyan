@@ -1,6 +1,6 @@
 {
   "name": "@mayachit/mocha-pretty-bunyan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MochaJS reporter that uses bunyan to display test logs",
   "keywords": [
     "mocha",
